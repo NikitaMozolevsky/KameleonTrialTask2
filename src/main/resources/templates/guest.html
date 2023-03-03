@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{~/css/guest.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/guest.css">
+    <title>Guest</title>
+</head>
+<body>
+
+<p class="header_buttons_border">
+    <button class="header_buttons_size">
+        <a class="header_text">
+            Profile
+        </a>
+    </button>
+    <button class="header_buttons_size">
+        <a class="header_text">
+            Top 10
+        </a>
+    </button>
+    <button class="header_buttons_size">
+        <a class="header_text">
+            Flop 10
+        </a>
+    </button>
+    <button class="header_buttons_size">
+        <a class="header_text">
+            Last
+        </a>
+    </button>
+</p>
+
+<div style="display: flex">
+
+    <div class="fieldset_random_quote">
+        <p class="quote_text">
+            Random quote
+        </p>
+    </div>
+
+    <div class="fieldset_profile">
+        <form th:method="POST" th:action="@{/process_login}"
+              th:object="${user}" class="sign_in_fields">
+
+            <!--<input type="hidden" th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}"/>-->
+            <p>
+            <input type="text" name="username" placeholder="Login"
+            th:field="*{username}" id="username">
+            <div style="color:red" th:if="${#fields.hasErrors('username')}"
+                 th:errors="*{username}">Username Error</div>
+            </p>
+            <p>
+            <input type="password" placeholder="Password"
+                   th:field="*{password}" id="password">
+            <div style="color:red" th:if="${#fields.hasErrors('password')}"
+                 th:errors="*{password}">Password Error</div>
+            </p>
+            <input type="submit" style="position: relative" name="sub" value="Sign in"/>
+
+            <a th:href="@{/registration}" th:action="GET"
+               style="font-size: 15px; position: relative; left: 35px;">
+                <span>
+                Create an account
+                </span>
+            </a>
+        </form>
+    </div>
+</div>
+
+<!--<div th:each="quote : ${quotes}">
+    <div class="fieldset_number_quote">
+        &lt;!&ndash;<a style="font-size: 10px;" th:text="Top ${quote.getPlace()} quote - Score"></a>&ndash;&gt;
+        <a style="font-size: 15px; vertical-align: sub">
+            &nbsp;&nbsp;&nbsp;&nbsp;Top "1" quote - Score<br>
+        </a>
+        &lt;!&ndash;a href="#" style="font-size: 15px; position: absolute; left: 550px; bottom: 400px">posted by Login</a>&ndash;&gt;
+        <a href="#" style="font-size: 15px; position: relative; left: 550px; top: 10px">posted by "Login"</a>
+
+        <div style="display: flex">
+            <button class="plus_minus_button"><a>+</a></button>
+            <button class="plus_minus_button"><a>-</a></button>
+        </div>
+    </div>
+</div>-->
+<br>
+<a th:value="${registered_msg}"></a>
+</body>
+</html>
