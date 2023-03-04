@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <p class="header_buttons_border">
+        <button class="header_buttons_size"
+                th:method="GET" th:action="@{/show_profile}">
+            <a class="header_text">
+                Profile
+            </a>
+        </button>
+        <button class="header_buttons_size"
+                th:method="GET" th:action="@{/top_10}">
+            <a class="header_text">
+                Top 10
+            </a>
+        </button>
+        <!--</form>-->
+        <button class="header_buttons_size"
+                th:method="GET" th:action="@{/flop_10}">
+            <a class="header_text">
+                Flop 10
+            </a>
+        </button>
+        <button class="header_buttons_size"
+                th:method="GET" th:action="@{/last_quote}">
+            <a class="header_text">
+                Last
+            </a>
+        </button>
+    </p>
+</head>
+<body>
+<div>
+    Username:
+    <p th:text=""></p>
+    Email:
+    <p></p>
+    Year of birth:
+    <p></p>
+    Date of creation:
+    <p></p>
+</div>
+</body>
+</html>

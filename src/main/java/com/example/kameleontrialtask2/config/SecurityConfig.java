@@ -27,6 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/authorized",
             "/error",
             "/auth/registration",
+            "/registration_page",
+            "/auth/registration",
             "/css/**"
     };
 
@@ -45,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 //попытка отправки злоумышленииком формы, для каких-то злоумышленных
                 //дел, доджится токеном на каждой thymeleaf странице
-                .csrf().disable() //отключение защиты от межсайтовой подделки запросов
+                /*.csrf().disable()*/ //отключение защиты от межсайтовой подделки запросов
 
                 .authorizeHttpRequests()
                 //страницы доступные админу
@@ -71,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //SpringSecurity сам обрабатывает данные
                 .loginProcessingUrl("/process_login")
                 //unsuccessful with key error (located in view (th) show message)
-                .failureForwardUrl("/guest")
+                .failureForwardUrl("/guest_bad_credentials")
                 //что происходит при успешной аутентификации
                 //перенаправление на /hello, true - всегда
                 .defaultSuccessUrl("/authorized", true)

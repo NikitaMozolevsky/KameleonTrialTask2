@@ -4,31 +4,32 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{~/css/guest.css}">
     <link rel="stylesheet" type="text/css" href="../static/css/guest.css">
-    <title>Guest</title>
+    <title>Guest2</title>
 </head>
 <body>
 
 <p class="header_buttons_border">
-    <button class="header_buttons_size">
+    <button class="header_buttons_size"
+            th:method="GET" th:action="@{/show_profile}">
         <a class="header_text">
             Profile
         </a>
     </button>
-
-    <button class="header_buttons_size">
-<!--<form th:method="GET" th:action="@{/top_10}">-->
-        <!--<input type="submit">-->
+    <button class="header_buttons_size"
+            th:method="GET" th:action="@{/top_10}">
         <a class="header_text">
             Top 10
         </a>
-<!--</form>-->
     </button>
-    <button class="header_buttons_size">
+<!--</form>-->
+    <button class="header_buttons_size"
+            th:method="GET" th:action="@{/flop_10}">
         <a class="header_text">
             Flop 10
         </a>
     </button>
-    <button class="header_buttons_size">
+    <button class="header_buttons_size"
+            th:method="GET" th:action="@{/last_quote}">
         <a class="header_text">
             Last
         </a>
@@ -57,11 +58,24 @@
             <input type="password" placeholder="Password"
                    th:field="*{password}" id="password">
             </p>
+
             <div th:if="${loginError}" style="color:red">Incorrect login or password</div>
-            <input type="submit" style="position: relative" name="sub" value="Sign in"/>
+            <!--<form id="some2_id">
+                <style>
+
+                    input[type=submit]#some3_id {
+                        width: 20px;
+                        height: 20px;
+                    }
+
+                </style>
+            <input type="submit" style="position: relative; width: 20px; height: 20px"
+                   name="sub" value="Sign in"/>
+            </form>-->
+            <button class="sign_in_button"><a>Sign in</a></button>
 
             <a th:href="@{/registration_page}" th:action="GET"
-               style="font-size: 15px; position: relative; left: 35px;">
+               style="font-size: 15px; position: absolute; left: 150px; top: 140px">
                 <span>
                 Create an account
                 </span>

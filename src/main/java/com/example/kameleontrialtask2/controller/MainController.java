@@ -18,6 +18,7 @@ import javax.validation.Valid;
 @RequestMapping
 public class MainController {
 
+    public static final String GUEST_HTML = "guest";
     public static final String REGISTERED_MSG_JS =
             "<script>window.alert('You were registered successful')</script>";
 
@@ -32,7 +33,13 @@ public class MainController {
 
     @GetMapping("/guest")
     public String toGuestPage(@ModelAttribute (name = "user") Person person) {
-        return "guest";
+        return GUEST_HTML;
+    }
+
+    @RequestMapping("/guest_bad_credentials")
+    public String loginError(Model model, @ModelAttribute (name = "user") Person person) {
+        model.addAttribute("loginError", true);
+        return GUEST_HTML;
     }
 
     @GetMapping("/authorized")
@@ -40,8 +47,8 @@ public class MainController {
         return "authorized";
     }
 
-    @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute Person person) {
+    @GetMapping("/registration_page")
+    public String registrationPage(@ModelAttribute("user") Person person, Model model) {
         return "registration";
     }
 
@@ -53,13 +60,12 @@ public class MainController {
         personValidator.validate(person, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("invalid_user", "");
-            return "registration";
+            return "/registration";
         }
 
         personService.register(person);
         model.addAttribute("registered_msg", REGISTERED_MSG_JS);
-        return "guest";
+        return GUEST_HTML;
     }
 
 }

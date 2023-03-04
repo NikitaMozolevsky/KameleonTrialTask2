@@ -60,7 +60,7 @@
     text-align: center;
 }
 
-.header_buttons_border{
+.header_buttons_border, input[type=submit]{
     border:1px solid #555;
     border-radius:5px;
     width: 1000px;
@@ -69,9 +69,21 @@
     padding:20px;*/
 }
 
-.header_buttons_size{
+.header_buttons_size, input[type=submit]#some_id{
     height:50px;
     width:100px;
+}
+
+.sign_in_button {
+    position: relative;
+    margin-left: 150px;
+    height:25px;
+    width:60px;
+}
+
+input[type=submit]#some2_id {
+    height:300px;
+    width:1px;
 }
 
 .quote_text{
@@ -80,7 +92,7 @@
     vertical-align: middle;
 }
 
-.header_text{
+.header_text, input[value=Profile]{
     font-size: 15px;
     font-weight: bold;
 }
