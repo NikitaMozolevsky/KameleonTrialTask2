@@ -42,7 +42,7 @@ public class QuoteService {
         return quoteRepository.findAllByPerson(person);
     }
 
-    public List<Quote> findTop10QuotesByRating(Person person) {
+    public List<Quote> findTop10QuotesByRating() {
 
         Session session = sessionFactory.getCurrentSession();
 
@@ -52,12 +52,12 @@ public class QuoteService {
                 .getResultList();
     }
 
-    public List<Quote> findBottom10QuotesByRating(Person person) {
+    public List<Quote> findFlop10QuotesByRating() {
 
         Session session = sessionFactory.getCurrentSession();
 
         return session.createQuery(
-                "select q from Quote q order by q.rating desc", Quote.class)
+                "select q from Quote q order by q.rating asc", Quote.class)
                 .setMaxResults(10)
                 .getResultList();
     }

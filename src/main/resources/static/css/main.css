@@ -34,7 +34,18 @@
     height: 100%;
 }
 
-.fieldset_profile {
+.fieldset_unregistered_profile {
+    position: relative;
+    height: 170px;
+    width: 277px;
+    display: inline-block;
+    border:1px solid #555;
+    border-radius:5px;
+    margin: 20px;
+    /*width: 1000px;*/
+}
+
+.fieldset_registered_profile {
     position: relative;
     right: -2px;
     height: 630px;
@@ -98,7 +109,7 @@
     text-align: center;
 }
 
-.header_buttons_border{
+.header_buttons_border {
     display: inline-block;
     border:1px solid #555;
     border-radius:5px;

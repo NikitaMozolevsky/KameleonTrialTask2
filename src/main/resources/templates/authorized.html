@@ -4,35 +4,59 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{~/css/authorized.css}">
     <link rel="stylesheet" type="text/css" href="../static/css/authorized.css">
-    <title>Registered</title>
+    <title>Authorized</title>
 </head>
 <body>
-
-<p class="header_buttons_border">
-    <button class="header_buttons_size">
-        <a class="header_text">
-            Profile
-        </a>
-    </button>
-    <button class="header_buttons_size">
+<div class="header_buttons_border">
+    <form th:method="GET" th:action="@{/profile_page}">
+        <button class="header_buttons_size" type="submit">
+            <a class="header_text">
+                Profile
+            </a>
+        </button>
+    </form>
+    <form th:method="GET" th:action="@{/top_10}">
+        <button class="header_buttons_size" type="submit">
+            <a class="header_text">
+                Top 10
+            </a>
+        </button>
+    </form>
+    <form th:method="GET" th:action="@{/Flop 10}">
+        <button class="header_buttons_size" type="submit">
+            <a class="header_text">
+                Flop 10
+            </a>
+        </button>
+    </form>
+    <form th:method="GET" th:action="@{/last_quote}">
+        <button class="header_buttons_size" type="submit">
+            <a class="header_text">
+                Last quote
+            </a>
+        </button>
+    </form>
+</div>
+    <!--<button class="header_buttons_size"
+            th:method="GET" th:action="@{/top_10}">
         <a class="header_text">
             Top 10
         </a>
     </button>
-    <button class="header_buttons_size">
+    &lt;!&ndash;</form>&ndash;&gt;
+    <button class="header_buttons_size"
+            th:method="GET" th:action="@{/flop_10}">
         <a class="header_text">
             Flop 10
         </a>
     </button>
-    <button class="header_buttons_size">
+    <button class="header_buttons_size"
+            th:method="GET" th:action="@{/last_quote}">
         <a class="header_text">
             Last
         </a>
-    </button>
-</p>
-
+    </button>-->
 <div style="display: flex">
-
     <div class="fieldset_random_quote">
         <p class="quote_text">
             Random quote

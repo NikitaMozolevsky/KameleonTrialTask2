@@ -18,17 +18,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    public static final String MAIN = "/main";
+
     private final PersonDetailsService personDetailsService;
     private final AuthProviderImpl authProvider;
 
     private final String[] allowedPages = new String[] {
             "/guest",
             "/registration",
-            "/authorized",
             "/error",
-            "/auth/registration",
-            "/registration_page",
-            "/auth/registration",
+            "/registration-page",
+            "/profile-page",
+            "/top-10",
+            "/flop-10",
             "/css/**"
     };
 
@@ -57,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 /**можно удалить и настраивать доступ к методам аннотацией
                  * @PreAuthorise*/
                 .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/profile").hasRole("USER")
                 //страницы доступные всем
                 .antMatchers(allowedPages).permitAll()
                 //для получения остальных страниц и пользователем и админом
@@ -71,9 +74,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/guest") //метод захода в систему
                 //SpringSecurity ожидает что сюда придут логин и пароль
                 //SpringSecurity сам обрабатывает данные
-                .loginProcessingUrl("/process_login")
+                .loginProcessingUrl("/process-login")
                 //unsuccessful with key error (located in view (th) show message)
-                .failureForwardUrl("/guest_bad_credentials")
+                .failureForwardUrl("/guest-bad-credentials")
                 //что происходит при успешной аутентификации
                 //перенаправление на /hello, true - всегда
                 .defaultSuccessUrl("/authorized", true)
@@ -81,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //удаление пользователя из сессии, удаление кукиз у пользователя
                 .logout().logoutUrl("/logout")
                 //redirect to this page after logout
-                .logoutSuccessUrl("/auth/login");
+                .logoutSuccessUrl("/guest");
 
     }
 

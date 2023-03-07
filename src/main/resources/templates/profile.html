@@ -2,45 +2,45 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Profile</title>
-    <p class="header_buttons_border">
-        <button class="header_buttons_size"
-                th:method="GET" th:action="@{/show_profile}">
-            <a class="header_text">
-                Profile
-            </a>
-        </button>
-        <button class="header_buttons_size"
-                th:method="GET" th:action="@{/top_10}">
-            <a class="header_text">
-                Top 10
-            </a>
-        </button>
-        <!--</form>-->
-        <button class="header_buttons_size"
-                th:method="GET" th:action="@{/flop_10}">
-            <a class="header_text">
-                Flop 10
-            </a>
-        </button>
-        <button class="header_buttons_size"
-                th:method="GET" th:action="@{/last_quote}">
-            <a class="header_text">
-                Last
-            </a>
-        </button>
-    </p>
+    <link rel="stylesheet" type="text/css" th:href="@{~/css/main.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <title>Main</title>
+
+    <div class="header_buttons_border">
+        <form th:method="GET" th:action="@{/top-10}">
+            <button class="header_buttons_size" type="submit">
+                <a class="header_text">
+                    Top 10
+                </a>
+            </button>
+        </form>
+
+        <form th:method="GET" th:action="@{/flop-10}">
+            <button class="header_buttons_size" type="submit">
+                <a class="header_text">
+                    Flop 10
+                </a>
+            </button>
+        </form>
+
+        <form th:method="GET" th:action="@{/last-quote}">
+            <button class="header_buttons_size" type="submit">
+                <a class="header_text">
+                    Last quote
+                </a>
+            </button>
+        </form>
+
+    </div>
 </head>
-<body>
+
 <div>
     Username:
-    <p th:text=""></p>
+    <a th:text="${user.getUsername()}">qwe</a><br>
     Email:
-    <p></p>
-    Year of birth:
-    <p></p>
+    <a th:text="${user.getEmail()}">qwe</a><br>
     Date of creation:
-    <p></p>
+    <a th:text="${user.getDateOfCreation()}">qwe</a><br>
 </div>
 </body>
 </html>

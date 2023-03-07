@@ -16,27 +16,25 @@
         </a>
     </button>
 </form>
-<form th:method="GET" th:action="@{/top_10}">
-    <button class="header_buttons_size" type="submit">
-        <a class="header_text">
-            Top 10
-        </a>
-    </button>
-</form>
-<form th:method="GET" th:action="@{/Flop 10}">
-    <button class="header_buttons_size" type="submit">
-        <a class="header_text">
-            Flop 10
-        </a>
-    </button>
-</form>
-<form th:method="GET" th:action="@{/last_quote}">
-    <button class="header_buttons_size" type="submit">
-        <a class="header_text">
-            Last quote
-        </a>
-    </button>
-</form>
+
+<button class="header_buttons_size">
+    <!--<form th:method="GET" th:action="@{/top_10}">-->
+    <!--<input type="submit">-->
+    <a class="header_text">
+        Top 10
+    </a>
+    <!--</form>-->
+</button>
+<button class="header_buttons_size">
+    <a class="header_text">
+        Flop 10
+    </a>
+</button>
+<button class="header_buttons_size">
+    <a class="header_text">
+        Last
+    </a>
+</button>
 </p>
 
 <div style="display: flex">
@@ -61,24 +59,11 @@
                 <input type="password" placeholder="Password"
                        th:field="*{password}" id="password">
             </p>
-
             <div th:if="${loginError}" style="color:red">Incorrect login or password</div>
-            <!--<form id="some2_id">
-                <style>
-
-                    input[type=submit]#some3_id {
-                        width: 20px;
-                        height: 20px;
-                    }
-
-                </style>
-            <input type="submit" style="position: relative; width: 20px; height: 20px"
-                   name="sub" value="Sign in"/>
-            </form>-->
-            <button class="sign_in_button"><a>Sign in</a></button>
+            <input type="submit" style="position: relative" name="sub" value="Sign in"/>
 
             <a th:href="@{/registration_page}" th:action="GET"
-               style="font-size: 15px; position: absolute; left: 150px; top: 140px">
+               style="font-size: 15px; position: relative; left: 35px;">
                 <span>
                 Create an account
                 </span>
