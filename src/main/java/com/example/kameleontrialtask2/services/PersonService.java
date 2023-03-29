@@ -1,7 +1,7 @@
 package com.example.kameleontrialtask2.services;
 
 import com.example.kameleontrialtask2.entity.Person;
-import com.example.kameleontrialtask2.repository.PeopleRepository;
+import com.example.kameleontrialtask2.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,17 +12,17 @@ import java.util.Date;
 @Service
 public class PersonService {
 
-    private final PeopleRepository peopleRepository;
+    private final PersonRepository personRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public PersonService(PeopleRepository peopleRepository, PasswordEncoder passwordEncoder) {
-        this.peopleRepository = peopleRepository;
+    public PersonService(PersonRepository personRepository, PasswordEncoder passwordEncoder) {
+        this.personRepository = personRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     public boolean personIsExist(String username) {
-        return peopleRepository.findByUsername(username).isPresent();
+        return personRepository.findByUsername(username).isPresent();
     }
 
     @Transactional //the changes in DB is executing
@@ -32,6 +32,6 @@ public class PersonService {
         person.setRole("ROLE_USER");
         person.setDateOfCreation(new Date());
         person.setPassword(passwordEncoder.encode(person.getPassword()));
-        peopleRepository.save(person);
+        personRepository.save(person);
     }
 }

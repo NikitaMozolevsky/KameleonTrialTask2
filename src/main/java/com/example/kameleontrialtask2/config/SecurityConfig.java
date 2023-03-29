@@ -18,20 +18,28 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public static final String MAIN = "/main";
-
     private final PersonDetailsService personDetailsService;
     private final AuthProviderImpl authProvider;
 
-    private final String[] allowedPages = new String[] {
+    private final String[] allowedPagesForGuest = new String[] {
             "/guest",
+            /*"/logout",*/
             "/registration",
             "/error",
             "/registration-page",
-            "/profile-page",
+            /*"/profile-page",*/
             "/top-10",
             "/flop-10",
             "/css/**"
+    };
+
+    private final String[] allowedPagesForUser = new String[] {
+            "/create-quote-page",
+            "/create-quote","/profile"
+    };
+
+    private final String[] allowedPagesForAdmin = new String[] {
+            "/admin"
     };
 
     @Autowired
@@ -58,10 +66,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //list of actions which user can do
                 /**можно удалить и настраивать доступ к методам аннотацией
                  * @PreAuthorise*/
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/profile").hasRole("USER")
+                .antMatchers(allowedPagesForAdmin).hasRole("ADMIN")
+                .antMatchers(allowedPagesForUser).hasRole("USER")
                 //страницы доступные всем
-                .antMatchers(allowedPages).permitAll()
+                .antMatchers(allowedPagesForGuest).permitAll()
                 //для получения остальных страниц и пользователем и админом
                 //can be deleted if will use @PreAuthorise and
                 //@EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -75,14 +83,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //SpringSecurity ожидает что сюда придут логин и пароль
                 //SpringSecurity сам обрабатывает данные
                 .loginProcessingUrl("/process-login")
+                //не точно, подсмотрел
+                .usernameParameter("username")
+                .passwordParameter("password")
                 //unsuccessful with key error (located in view (th) show message)
-                .failureForwardUrl("/guest-bad-credentials")
+                .failureForwardUrl("/bad-credentials")
                 //что происходит при успешной аутентификации
                 //перенаправление на /hello, true - всегда
-                .defaultSuccessUrl("/authorized", true)
+                .defaultSuccessUrl("/guest", true)
                 .and()
                 //удаление пользователя из сессии, удаление кукиз у пользователя
-                .logout().logoutUrl("/logout")
+                .logout()
+                .logoutUrl("/logout")
                 //redirect to this page after logout
                 .logoutSuccessUrl("/guest");
 

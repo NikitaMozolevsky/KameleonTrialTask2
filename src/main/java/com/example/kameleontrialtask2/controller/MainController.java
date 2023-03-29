@@ -1,52 +1,84 @@
 package com.example.kameleontrialtask2.controller;
 
+import com.example.kameleontrialtask2.exceptions.ServiceException;
 import com.example.kameleontrialtask2.entity.Person;
-import com.example.kameleontrialtask2.security.PersonDetails;
+import com.example.kameleontrialtask2.entity.Quote;
 import com.example.kameleontrialtask2.services.PersonService;
+import com.example.kameleontrialtask2.services.PrincipalService;
+import com.example.kameleontrialtask2.services.QuoteService;
 import com.example.kameleontrialtask2.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+
+import static com.example.kameleontrialtask2.constant.HtmlConstant.*;
 
 @Controller
 @RequestMapping
 public class MainController {
-
-    public static final String MAIN = "main";
-    public static final String PROFILE = "profile";
-    public static final String REGISTRATION = "registration";
 
     public static final String REGISTERED_MSG_JS =
             "<script>window.alert('You were registered successful')</script>";
 
     private final PersonValidator personValidator;
     private final PersonService personService;
+    private final QuoteService quoteService;
+    private final PrincipalService principalService;
 
     @Autowired
-    public MainController(PersonValidator personValidator, PersonService personService) {
+    public MainController(PersonValidator personValidator,
+                          PersonService personService, QuoteService quoteService, PrincipalService principalService) {
         this.personValidator = personValidator;
         this.personService = personService;
+        this.quoteService = quoteService;
+        this.principalService = principalService;
     }
 
     @GetMapping("/guest")
-    public String toGuestPage(@ModelAttribute (name = "user") Person person) {
+    public String toMainPage(@ModelAttribute (name = "user") Person person,
+                             @RequestParam (value = "badCredentials", required = false)
+                                      boolean badCredentials,
+                             Model model) {
+
+        if (badCredentials) {
+            model.addAttribute("loginError", true);
+        }
+
+        boolean quotesAreCreated;
+
+        try {
+            Quote quote = quoteService.findRandomQuote();
+
+            quotesAreCreated = true;
+            model.addAttribute("randomQuoteText", quote.getQuoteText());
+            model.addAttribute("randomQuoteOwner", quote.getPerson().getUsername());
+        } catch (ServiceException e) {
+            quotesAreCreated = false;
+        }
+        model.addAttribute("quotesAreCreated", quotesAreCreated);
+        model.addAttribute("quotesAreNotCreatedText", "");
+
         return MAIN;
     }
 
-    @RequestMapping("/guest-bad-credentials")
-    public String loginError(Model model, @ModelAttribute (name = "user") Person person) {
+    /*@RequestMapping("/bad-credentials")
+    public String loginError(@ModelAttribute (name = "user") Person person,
+                             Model model) {
         model.addAttribute("loginError", true);
         return MAIN;
+    }*/
+
+    @RequestMapping("/bad-credentials")
+    public String loginErrorSecond(@ModelAttribute (name = "user") Person person,
+                                   Model model) {
+
+        return toMainPage(person, true, model);
     }
 
     @GetMapping("/authorized")
@@ -72,24 +104,31 @@ public class MainController {
 
         personService.register(person);
         model.addAttribute("registered_msg", REGISTERED_MSG_JS);
-        return MAIN;
+        return toMainPage(person, false, model);
     }
 
     @GetMapping("/profile-page")
-    public String profile(HttpServletRequest request) {
-        //достается объект который был проложен после успешной аутентификации
+    public ModelAndView profile() {
+
+        ModelAndView modelAndView = new ModelAndView();
+        Person person = principalService.getPerson();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
+        String date = simpleDateFormat.format(person.getDateOfCreation());
+
+        modelAndView.addObject("user", person);
+        modelAndView.addObject("date_of_creation", date);
+        modelAndView.setViewName(PROFILE);
+
+        return modelAndView;
+
+        /*//достается объект который был проложен после успешной аутентификации
         //был положен в сессию, SpringSecurity положил его в контекст пользователя
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
         //вывод данных пользователя
-        System.out.println(personDetails.getPerson().toString());
-
-        Person person = personDetails.getPerson();
-
-        request.setAttribute("user", person);
-
-        return PROFILE;
+        System.out.println(personDetails.getPerson().toString());*/
     }
 
 }

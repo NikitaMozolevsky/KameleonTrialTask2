@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" th:href="@{~/css/main.css}">
-    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
-    <title>Main</title>
-
+<div id="intro-dm" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="header_buttons_border">
 
         <div sec:authorize="isAuthenticated()">
@@ -54,15 +45,4 @@
             </form>
         </div>
     </div>
-</head>
-
-<div>
-    Username:
-    <a th:text="${user.getUsername()}">qwe</a><br>
-    Email:
-    <a th:text="${user.getEmail()}">qwe</a><br>
-    Date of creation:
-    <a th:text="${date_of_creation}">qwe</a><br>
 </div>
-</body>
-</html>
