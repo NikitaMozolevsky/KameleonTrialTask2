@@ -1,0 +1,162 @@
+<!--
+
+<div sec:authorize="isAuthenticated()">
+<div sec:authorize="isAnonymous()">
+  This content is only shown to authenticated users.
+</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+  This content is only shown to administrators.
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+  This content is only shown to users.
+</div>
+
+The sec:authentication attribute is used to print logged user name and roles:
+
+Logged user: <span sec:authentication="name">Bob</span>
+Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+
+-->
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{~/css/main.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <title>Main</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+
+</head>
+
+<body>
+
+    <?php include ("head.html")?>
+
+    <div style="display: flex">
+
+        <div th:if="${quotesAreCreated}" class="fieldset_random_quote">
+            <p class="quote_text">
+                Random quote
+            </p>
+        </div>
+
+        <div th:if="${!quotesAreCreated}" class="fieldset_random_quote">
+            <p class="quote_text">
+                Quotes don't exist yet, you can be first!
+            </p>
+        </div>
+        <!--<div sec:authorize="!isAnonymous()">
+            <form th:method="GET" th:action="@{/create-quote-page}">
+                <button style="margin-left: 38%" type="submit">
+                    <a>
+                        Create quote
+                    </a>
+                </button>
+            </form>
+        </div>-->
+
+<!--        sec:authorize="isAuthenticated()"-->
+
+        <div sec:authorize="isAuthenticated()" class="fieldset_registered_profile">
+
+            <a style="position: relative; left: 10px">Hello <span sec:authentication="name">Bob</span></a><br>
+
+            <form th:method="POST" th:action="@{/logout}" id="form-logout">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input style="margin-left: 10px" type="submit" value="Logout">
+            </form>
+
+            <!--<form th:action="@{/logout}" th:method="GET">
+            <button style="margin-left: 10px" type="submit">Log out</button>
+            </form>-->
+
+            <div class="fieldset_profile_last_votes">
+                <div class="second_fieldset_profile_last_votes">
+
+                    <script>
+                        $('#targetid').load()
+                    </script>
+
+
+                    <a>&nbsp;&nbsp;Last 3 votes (all votes count = [[${all_votes_number}]])</a>
+                    <br><br>
+                    <a>Quote 1Quote 1Quote 1Quote 1Quote 1Quote 1Quote 1Quote 1Quote 1</a><br><br>
+                    <a>Quote 2</a><br><br>
+                    <a>Quote 3Quote 3Quote 3Quote 3Quote 3Quote 3Quote 3Quote 3Quote 3Quote 3</a><br><br>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="fieldset_unregistered_profile" th:if="${loginError}">
+
+            <form th:method="POST" th:action="@{/process-login}"
+                  th:object="${user}" class="sign_in_fields">
+
+                <input type="hidden" th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}"/>
+
+                <!--name="username"--><p><input type="text" placeholder="Login"
+                          th:field="*{username}"></p>
+
+                <p><input type="password" placeholder="Password"
+                          th:field="*{password}"></p>
+
+                <div th:if="${loginError}" style="color:red">Incorrect login or password</div>
+
+                <button class="sign_in_button"><a>Sign in</a></button>
+
+                <a th:href="@{/registration-page}" th:action="GET"
+                   style="font-size: 15px; position: absolute; left: 150px; top: 140px">
+                    <span>Create an account</span></a>
+
+            </form>
+        </div>
+
+        <div class="fieldset_unregistered_profile" sec:authorize="isAnonymous()">
+
+            <form th:method="POST" th:action="@{/process-login}"
+                  th:object="${user}" class="sign_in_fields">
+
+                <input type="hidden" th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}"/>
+
+                <p><input type="text" name="username" placeholder="Login"
+                           th:field="*{username}" id="username"></p>
+
+                <p><input type="password" placeholder="Password"
+                           th:field="*{password}" id="password"></p>
+
+                <div th:if="${loginError}" style="color:red">Incorrect login or password</div>
+
+                <button class="sign_in_button"><a>Sign in</a></button>
+
+                <a th:href="@{/registration-page}" th:action="GET"
+                   style="font-size: 15px; position: absolute; left: 150px; top: 140px">
+                    <span>Create an account</span></a>
+
+            </form>
+        </div>
+    </div>
+
+    <div th:each="quote : ${quotes}">
+        <div class="fieldset_number_quote">
+            <!--<a style="font-size: 10px;" th:text="Top ${quote.getPlace()} quote - Score"></a>-->
+            <a style="font-size: 15px; vertical-align: sub">
+                &nbsp;&nbsp;&nbsp;&nbsp;Top 1 quote - Score<br>
+            </a>
+            <!--a href="#" style="font-size: 15px; position: absolute; left: 550px; bottom: 400px">posted by Login</a>-->
+            <a href="#" style="font-size: 15px; position: relative; left: 550px; top: 10px">posted by Login</a>
+
+            <div style="display: flex">
+                <button class="plus_minus_button"><a>+</a></button>
+                <button class="plus_minus_button"><a>-</a></button>
+            </div>
+        </div>
+        <br>
+    </div>
+</body>
+</html>

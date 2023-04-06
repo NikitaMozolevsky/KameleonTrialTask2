@@ -59,12 +59,13 @@ public class QuoteService {
 
     public List<Quote> findTop10QuotesByRating() {
 
-        Session session = sessionFactory.getCurrentSession();
+        try(Session session = sessionFactory.openSession()) {
 
         return session.createQuery(
                 "select q from Quote q order by q.rating desc", Quote.class)
                 .setMaxResults(10)
                 .getResultList();
+        }
     }
 
     public List<Quote> findFlop10QuotesByRating() {

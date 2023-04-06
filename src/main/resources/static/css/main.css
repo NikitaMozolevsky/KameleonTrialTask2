@@ -3,8 +3,9 @@
     height: 170px;
     width: 700px;
     display: inline-block;
-    border:1px solid #555;
     border-radius:5px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
     /*width: 1000px;*/
 }
 
@@ -39,21 +40,23 @@
     height: 170px;
     width: 277px;
     display: inline-block;
-    border:1px solid #555;
+    border: 1px solid #ccc;
     border-radius:5px;
     margin: 20px;
+    background-color: #f2f2f2;
     /*width: 1000px;*/
 }
 
 .fieldset_registered_profile {
     position: relative;
     right: -2px;
-    height: 630px;
+    height: 600px;
     width: 277px;
     display: inline-block;
-    border:1px solid #555;
+    border: 1px solid #ccc;
     border-radius:5px;
     margin: 20px;
+    background-color: #f2f2f2;
     /*width: 1000px;*/
 }
 
@@ -61,12 +64,13 @@
     position: relative;
     right:7px;
     top:75px;
-    height: 480px;
+    height: 450px;
     width: 250px;
     display: inline-block;
-    border:1px solid #555;
+    border: 1px solid #ccc;
     border-radius:5px;
     margin: 20px;
+    background-color: aliceblue;
     /*width: 1000px;*/
 }
 
@@ -74,10 +78,10 @@
     position: relative;
     right: 15px;
     top:-15px;
-    height: 470px;
+    height: 450px;
     width: 240px;
     display: inline-block;
-    border:0px solid #555;
+    border: 0px solid #ccc;
     border-radius:5px;
     margin: 20px;
     /*width: 1000px;*/
@@ -110,10 +114,14 @@
 }
 
 .header_buttons_border {
-    display: inline-block;
-    border:1px solid #555;
     border-radius:5px;
     width: 1000px;
+    background-color: #f2f2f2; /* ?????????? ???? ???? */
+    padding: 10px; /* ?????????? ??????? ?????? ????? */
+    font-family: Arial, sans-serif; /* ?????????? ????? */
+    font-size: 14px; /* ?????????? ?????? ?????? */
+    line-height: 1.5; /* ?????????? ??????????? ?????????? */
+    border: 1px solid #ccc; /* ???????? ??????? */
     /*text-align:center;*/
     /*margin:20px;
     padding:20px;*/
@@ -131,9 +139,15 @@
     vertical-align: middle;
 }
 
-.header_text{
+.header_text, .header_text:hover {
     font-size: 15px;
     font-weight: bold;
+    text-decoration: underline;
+    color: #009688;
+}
+
+.header_text:hover {
+    text-decoration: none;
 }
 
 .plus_minus_button{
@@ -141,4 +155,83 @@
     margin-left: 15px;
     height:25px;
     width:25px;
+}
+
+.header_buttons{
+    display: inline-block;
+    background-color: #f2f2f2;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.posted_by {
+    padding-left:600px;
+    padding-top: -500px;
+}
+
+.fieldset_number_quote {
+    position: relative;
+    top:20px;
+    height: 60px;
+    width: 700px;
+    /*display: inline-block;*/
+    border: 1px solid #ccc;
+    border-radius:5px;
+    background-color: #f2f2f2;
+    /*width: 1000px;*/
+}
+
+.quote_text_queue_border {
+    margin-left: 130px;
+    margin-top: -70px;
+    height: 13px;
+    border-radius:5px;
+    width: 600px;
+     /* ?????????? ???? ???? */
+    padding: 10px; /* ?????????? ??????? ?????? ????? */
+    font-family: Arial, sans-serif; /* ?????????? ????? */
+    font-size: 14px; /* ?????????? ?????? ?????? */
+    line-height: 1.5; /* ?????????? ??????????? ?????????? */
+    border: 0px solid #ccc; /* ???????? ??????? */
+    /*text-align:center;*/
+    /*margin:20px;
+    padding:20px;*/
+}
+
+.quote_text_queue{
+    font-size:20px;
+    text-align: center;
+    vertical-align: middle;
+    order: -1;
+    display: flex;
+    flex-direction: column;
+    margin-top: -10px;
+}
+
+.quotes_block {
+    margin-left: 130px;
+    margin-top: -70px;
+    height: 13px;
+    border-radius:5px;
+    width: 600px;
+    /* ?????????? ???? ???? */
+    padding: 10px; /* ?????????? ??????? ?????? ????? */
+    font-family: Arial, sans-serif; /* ?????????? ????? */
+    font-size: 14px; /* ?????????? ?????? ?????? */
+    line-height: 1.5; /* ?????????? ??????????? ?????????? */
+    border: 0px solid #ccc; /* ???????? ??????? */
+    /*text-align:center;*/
+    /*margin:20px;
+    padding:20px;*/
+}
+
+.random_quote_owner {
+    position: absolute;
+    margin-left: 100px;
+    top: 260px;
+    font-size: 15px;
 }

@@ -5,6 +5,7 @@ import com.example.kameleontrialtask2.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ToMainPageOverloading {
@@ -16,9 +17,10 @@ public class ToMainPageOverloading {
         this.mainController = mainController;
     }
 
-    public String toMainPage(Model model) {
+
+    public ModelAndView toMainPage(ModelAndView modelAndView) {
         return mainController.toMainPage
-                (new Person(), false, model);
+                (new Person(), false, modelAndView);
     }
 
 }

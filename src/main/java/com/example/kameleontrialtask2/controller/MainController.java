@@ -41,13 +41,14 @@ public class MainController {
     }
 
     @GetMapping("/guest")
-    public String toMainPage(@ModelAttribute (name = "user") Person person,
+    public ModelAndView toMainPage(@ModelAttribute (name = "user") Person person,
                              @RequestParam (value = "badCredentials", required = false)
                                       boolean badCredentials,
-                             Model model) {
+                             ModelAndView modelAndView) {
 
         if (badCredentials) {
-            model.addAttribute("loginError", true);
+
+            modelAndView.addObject("loginError", true);
         }
 
         boolean quotesAreCreated;
@@ -56,15 +57,16 @@ public class MainController {
             Quote quote = quoteService.findRandomQuote();
 
             quotesAreCreated = true;
-            model.addAttribute("randomQuoteText", quote.getQuoteText());
-            model.addAttribute("randomQuoteOwner", quote.getPerson().getUsername());
+            modelAndView.addObject("randomQuoteText", quote.getQuoteText());
+            modelAndView.addObject("randomQuoteOwner", quote.getPerson().getUsername());
         } catch (ServiceException e) {
             quotesAreCreated = false;
         }
-        model.addAttribute("quotesAreCreated", quotesAreCreated);
-        model.addAttribute("quotesAreNotCreatedText", "");
+        modelAndView.addObject("quotesAreCreated", quotesAreCreated);
+        modelAndView.addObject("quotesAreNotCreatedText", "");
+        modelAndView.setViewName(MAIN);
 
-        return MAIN;
+        return modelAndView;
     }
 
     /*@RequestMapping("/bad-credentials")
@@ -75,15 +77,10 @@ public class MainController {
     }*/
 
     @RequestMapping("/bad-credentials")
-    public String loginErrorSecond(@ModelAttribute (name = "user") Person person,
-                                   Model model) {
+    public ModelAndView loginErrorSecond(@ModelAttribute (name = "user") Person person,
+                                   ModelAndView modelAndView) {
 
-        return toMainPage(person, true, model);
-    }
-
-    @GetMapping("/authorized")
-    public String toAuthorizedPage() {
-        return MAIN;
+        return toMainPage(person, true, modelAndView);
     }
 
     @GetMapping("/registration-page")
@@ -92,19 +89,20 @@ public class MainController {
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("user") @Valid Person person,
-                               Model model,
+    public ModelAndView registration(@ModelAttribute("user") @Valid Person person,
+                               ModelAndView modelAndView,
                                BindingResult bindingResult) {
 
         personValidator.validate(person, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return REGISTRATION;
+            modelAndView.setViewName(REGISTRATION);
+            return modelAndView;
         }
 
         personService.register(person);
-        model.addAttribute("registered_msg", REGISTERED_MSG_JS);
-        return toMainPage(person, false, model);
+        modelAndView.addObject("registered_msg", REGISTERED_MSG_JS);
+        return toMainPage(person, false, modelAndView);
     }
 
     @GetMapping("/profile-page")

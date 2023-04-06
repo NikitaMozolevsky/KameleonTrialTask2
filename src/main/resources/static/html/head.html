@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" th:href="@{~/css/profile.css}">
-    <link rel="stylesheet" type="text/css" href="../static/css/profile.css">
-    <title>Profile</title>
-    <script src="../static/js/main_js.js"></script>
-
-    <!--<div id="head_id"></div>-->
-
-    <div class="header_buttons_border">
+<link rel="stylesheet" type="text/css" th:href="@{~/css/head.css}">
+<link rel="stylesheet" type="text/css" href="/static/css/head.css">
+<div xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div id="head_id" class="header_buttons_border">
 
         <div class="header_buttons" sec:authorize="isAuthenticated()">
             <form th:method="GET" th:action="@{/profile-page}">
@@ -63,19 +53,4 @@
             </form>
         </div>
     </div>
-
-</head>
-
-<body>
-
-<div>
-    Username:
-    <a th:text="${user.getUsername()}">qwe</a><br>
-    Email:
-    <a th:text="${user.getEmail()}">qwe</a><br>
-    Date of creation:
-    <a th:text="${date_of_creation}">qwe</a><br>
 </div>
-
-</body>
-</html>

@@ -21,21 +21,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PersonDetailsService personDetailsService;
     private final AuthProviderImpl authProvider;
 
-    private final String[] allowedPagesForGuest = new String[] {
+    private final String[] allowedPagesForGuest = new String[]{
             "/guest",
             /*"/logout",*/
             "/registration",
             "/error",
             "/registration-page",
-            /*"/profile-page",*/
             "/top-10",
             "/flop-10",
-            "/css/**"
+            "/last-quote",
+            /**Отвечают за CSS и JS, судя по всему исходит от /resources*/
+            "/static/js/**",
+            "/static/css/**",
+            "/static/html/**"
     };
 
     private final String[] allowedPagesForUser = new String[] {
             "/create-quote-page",
-            "/create-quote","/profile"
+            "/create-quote",
+            "/profile",
+            "/profile-page",
+
     };
 
     private final String[] allowedPagesForAdmin = new String[] {
