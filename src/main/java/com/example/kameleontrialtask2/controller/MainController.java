@@ -47,7 +47,6 @@ public class MainController {
                              ModelAndView modelAndView) {
 
         if (badCredentials) {
-
             modelAndView.addObject("loginError", true);
         }
 
@@ -64,6 +63,7 @@ public class MainController {
         }
         modelAndView.addObject("quotesAreCreated", quotesAreCreated);
         modelAndView.addObject("quotesAreNotCreatedText", "");
+        modelAndView.addObject("user", new Person());
         modelAndView.setViewName(MAIN);
 
         return modelAndView;

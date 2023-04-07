@@ -26,54 +26,56 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{~/css/create_quote.css}">
     <link rel="stylesheet" type="text/css" href="../static/css/create_quote.css">
+    <link rel="stylesheet" type="text/css" th:href="@{~/css/common_styles.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/common_styles.css">
     <link rel="import" href="head.html">
     <script src="../static/js/main_js.js"></script>
     <title>Main</title>
 
-    <div class="header_buttons_border">
+    <div class="header_buttons_field">
 
-        <div class="header_buttons" sec:authorize="isAuthenticated()">
+        <div class="header_button" sec:authorize="isAuthenticated()">
             <form th:method="GET" th:action="@{/profile-page}">
-                <button class="header_buttons_size" type="submit">
-                    <span class="header_text">Profile</span>
+                <button class="header_button_size" type="submit">
+                    <span class="header_button_text">Profile</span>
                 </button>
             </form>
         </div>
 
-        <div class="header_buttons" >
+        <div class="header_button" >
             <form th:method="GET" th:action="@{/top-10}">
-                <button class="header_buttons_size" type="submit">
-                    <a class="header_text">
+                <button class="header_button_size" type="submit">
+                    <a class="header_button_text">
                         Top 10
                     </a>
                 </button>
             </form>
         </div>
 
-        <div class="header_buttons">
+        <div class="header_button">
             <form th:method="GET" th:action="@{/flop-10}">
-                <button class="header_buttons_size" type="submit">
-                    <a class="header_text">
+                <button class="header_button_size" type="submit">
+                    <a class="header_button_text">
                         Flop 10
                     </a>
                 </button>
             </form>
         </div>
 
-        <div class="header_buttons">
+        <div class="header_button">
             <form th:method="GET" th:action="@{/last-quote}">
-                <button class="header_buttons_size" type="submit">
-                    <a class="header_text">
+                <button class="header_button_size" type="submit">
+                    <a class="header_button_text">
                         Last quote
                     </a>
                 </button>
             </form>
         </div>
 
-        <div class="header_buttons" sec:authorize="isAuthenticated()">
+        <div class="header_button" sec:authorize="isAuthenticated()">
             <form th:method="GET" th:action="@{/create-quote-page}">
-                <button class="header_buttons_size" type="submit">
-                    <a class="header_text">
+                <button class="header_button_size" type="submit">
+                    <a class="header_button_text">
                         Create quote
                     </a>
                 </button>
@@ -87,8 +89,8 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
 
 <div style="display: flex">
 
-    <div class="fieldset_create_quote">
-        <p style="position: relative; font-size: 20px; top: -15px">
+    <div class="create_quote_field">
+        <p class="create_quote_head_text">
             Create quote:
         </p>
 

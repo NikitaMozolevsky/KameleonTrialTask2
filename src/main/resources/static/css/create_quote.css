@@ -8,7 +8,7 @@
     /*width: 1000px;*/
 }
 
-.fieldset_create_quote {
+.create_quote_field {
     margin-top: 20px;
     height: 220px;
     width: 700px;
@@ -17,6 +17,7 @@
     border-radius:5px;
     text-align: center;
     font-size: 15px;
+    background-color: #f2f2f2;
 
     /*width: 1000px;*/
 }
@@ -153,7 +154,7 @@
     position: relative;
     text-align: center;
     vertical-align: top;
-    width: 550px;
+    width: 638px;
     margin-left: 30px;
     margin-top: -30px;
 
@@ -208,4 +209,10 @@
 
 .header_text:hover {
     text-decoration: none;
+}
+
+.create_quote_head_text {
+    position: relative;
+    font-size: 20px;
+    top: -15px
 }

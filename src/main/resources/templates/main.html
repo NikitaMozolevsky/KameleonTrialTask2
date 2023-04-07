@@ -26,6 +26,8 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{~/css/main.css}">
     <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <link rel="stylesheet" type="text/css" th:href="@{~/css/common_styles.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/common_styles.css">
     <!--<link rel="stylesheet" type="text/css" href="/css/main.css">-->
     <title>Main</title>
     <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
@@ -38,50 +40,50 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
 
 <body>
 
-<div class="header_buttons_border">
+<div class="header_buttons_field">
 
-    <div class="header_buttons" sec:authorize="isAuthenticated()">
+    <div class="header_button" sec:authorize="isAuthenticated()">
         <form th:method="GET" th:action="@{/profile-page}">
-            <button class="header_buttons_size" type="submit">
-                <span class="header_text">Profile</span>
+            <button class="header_button_size" type="submit">
+                <span class="header_button_text">Profile</span>
             </button>
         </form>
     </div>
 
-    <div class="header_buttons" >
+    <div class="header_button" >
         <form th:method="GET" th:action="@{/top-10}">
-            <button class="header_buttons_size" type="submit">
-                <a class="header_text">
+            <button class="header_button_size" type="submit">
+                <a class="header_button_text">
                     Top 10
                 </a>
             </button>
         </form>
     </div>
 
-    <div class="header_buttons">
+    <div class="header_button">
         <form th:method="GET" th:action="@{/flop-10}">
-            <button class="header_buttons_size" type="submit">
-                <a class="header_text">
+            <button class="header_button_size" type="submit">
+                <a class="header_button_text">
                     Flop 10
                 </a>
             </button>
         </form>
     </div>
 
-    <div class="header_buttons">
+    <div class="header_button">
         <form th:method="GET" th:action="@{/last-quote}">
-            <button class="header_buttons_size" type="submit">
-                <a class="header_text">
+            <button class="header_button_size" type="submit">
+                <a class="header_button_text">
                     Last quote
                 </a>
             </button>
         </form>
     </div>
 
-    <div class="header_buttons" sec:authorize="isAuthenticated()">
+    <div class="header_button" sec:authorize="isAuthenticated()">
         <form th:method="GET" th:action="@{/create-quote-page}">
-            <button class="header_buttons_size" type="submit">
-                <a class="header_text">
+            <button class="header_button_size" type="submit">
+                <a class="header_button_text">
                     Create quote
                 </a>
             </button>
@@ -89,31 +91,35 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
     </div>
 </div>
 
-<div style="display: flex">
+<div style="display: flex; position: relative">
 
-    <div th:if="${quotesAreCreated}" class="fieldset_random_quote">
-        <p class="quote_text">
-            <a class="quote_text" th:text="${'&quot' + randomQuoteText} + '&quot'">Random quote</a>
-            <a class="random_quote_owner" th:text="${'Posted by ' + randomQuoteOwner}">Random quote owner</a>
-        </p>
+    <div th:if="${quotesAreCreated}" class="main_quote_field"> <!--class="fieldset_random_quote"-->
+        <a class="main_quote_information">
+            Top 1 quote - Score<br>
+        </a>
+
+        <div style="display: flex; margin-top: 20px; left: 20px">
+            <button class="main_quote_plus_minus_button"><a>+</a></button> <!--class="plus_minus_button"-->
+            <button class="main_quote_plus_minus_button"><a>-</a></button> <!--class="plus_minus_button"-->
+        </div>
+
+        <div class="main_quote_text_border"> <!--class="quote_text_queue_border"-->
+            <a class="main_quote_text"
+               th:text="${'&quot' + randomQuoteText} + '&quot'">
+               "Random quote"
+            </a><!--class="quote_text"-->
+        </div>
+        <a class="main_quote_owner"
+           th:text="${'Posted by ' + randomQuoteOwner}">
+           Random quote owner
+        </a><!--class="random_quote_owner"-->
     </div>
 
-    <div th:unless="${quotesAreCreated}" class="fieldset_random_quote">
-        <p class="quote_text">
+    <!--<div th:unless="${quotesAreCreated}" class="main_quote_text_border">
+        <p class="main_quote_text">
             Quotes don't exist yet, you can be first!
         </p>
-    </div>
-    <!--<div sec:authorize="!isAnonymous()">
-        <form th:method="GET" th:action="@{/create-quote-page}">
-            <button style="margin-left: 38%" type="submit">
-                <a>
-                    Create quote
-                </a>
-            </button>
-        </form>
     </div>-->
-
-    <!--        sec:authorize="isAuthenticated()"-->
 
     <div sec:authorize="isAuthenticated()" class="fieldset_registered_profile">
 
@@ -131,9 +137,6 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
         <div class="fieldset_profile_last_votes">
             <div class="second_fieldset_profile_last_votes">
 
-                <script>
-                    $('#targetid').load()
-                </script>
 
 
                 <a>&nbsp;&nbsp;Last 3 votes (all votes count = [[${all_votes_number}]])</a>
@@ -160,13 +163,13 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
             <p><input type="password" placeholder="Password"
                       th:field="*{password}"></p>
 
-            <div th:if="${loginError}" style="color:red">Incorrect login or password</div>
+            <div th:if="${loginError}" class="incorrect_log_and_pass_text">Incorrect login or password</div>
 
-            <button class="sign_in_button"><a>Sign in</a></button>
+            <button class="sign_in_button"><a>Sign in</a></button> <!--class="sign_in_button"-->
 
-            <a th:href="@{/registration-page}" th:action="GET"
-               style="font-size: 15px; position: absolute; left: 150px; top: 140px">
-                <span>Create an account</span></a>
+            <a th:href="@{/registration-page}" th:action="GET" class="create_an_account_link">
+                <span>Create an account</span>
+            </a>
 
         </form>
     </div>
@@ -185,15 +188,45 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
             <p><input type="password" placeholder="Password"
                       th:field="*{password}" id="password"></p>
 
-            <div th:if="${loginError}" style="color:red">Incorrect login or password</div>
+            <div th:if="${loginError}" style="color:red; position: relative; bottom: 10px">Incorrect login or password</div>
 
-            <button class="sign_in_button"><a>Sign in</a></button>
+            <button style="position: relative;
+    bottom: 10px;
+    height:25px;
+    width:60px;"><a>Sign in</a></button>
 
             <a th:href="@{/registration-page}" th:action="GET"
-               style="font-size: 15px; position: absolute; left: 150px; top: 140px">
+               style="font-size: 15px; position: relative; left: 10px; top: -5px">
                 <span>Create an account</span></a>
 
         </form>
+    </div>
+
+    <div style="position: absolute;
+    margin-top: 150px;">
+        <div th:each="quote : ${quotes}" class="fieldset_number_quote">
+
+            <!--<a style="font-size: 10px;" th:text="Top ${quote.getPlace()} quote - Score"></a>-->
+            <a style="font-size: 15px; vertical-align: super; margin-left: -10px">
+                &nbsp;&nbsp;&nbsp;&nbsp;Top 1 quote - Score<br>
+            </a>
+
+            <div style="display: flex; margin-top: 20px; left: 20px">
+                <button class="plus_minus_button"><a>+</a></button>
+                <button class="plus_minus_button"><a>-</a></button>
+            </div>
+
+            <!--a href="#" style="font-size: 15px; position: absolute; left: 550px; bottom: 400px">posted by Login</a>-->
+            <a style="position: relative; margin-left: 540px; top: -20px"
+               th:text="${'posted by ' + quote.getPerson().getUsername()}">
+                Posted by Username
+            </a>
+
+            <div class="quote_text_queue_border">
+                <span class="quote_text_queue" th:text="${'&quot' + quote.getQuoteText() + '&quot'}">Some quote</span>
+            </div>
+            <br>
+        </div>
     </div>
 </div>
 
@@ -201,32 +234,7 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
     <span th:text="${element.getQuoteText()}"></span>
 </div>-->
 
-<div style="margin-top: -451px">
-<div th:each="quote : ${quotes}">
-    <div class="fieldset_number_quote">
-        <!--<a style="font-size: 10px;" th:text="Top ${quote.getPlace()} quote - Score"></a>-->
-        <a style="font-size: 15px; vertical-align: super; margin-left: -10px">
-            &nbsp;&nbsp;&nbsp;&nbsp;Top 1 quote - Score<br>
-        </a>
 
-        <div style="display: flex; margin-top: 20px; left: 20px">
-            <button class="plus_minus_button"><a>+</a></button>
-            <button class="plus_minus_button"><a>-</a></button>
-        </div>
-
-        <!--a href="#" style="font-size: 15px; position: absolute; left: 550px; bottom: 400px">posted by Login</a>-->
-        <a style="position: relative; margin-left: 540px; top: -20px"
-              th:text="${'posted by ' + quote.getPerson().getUsername()}">
-            Posted by Username
-        </a>
-
-        <div class="quote_text_queue_border">
-            <span class="quote_text_queue" th:text="${'&quot' + quote.getQuoteText() + '&quot'}">Some quote</span>
-        </div>
-    </div>
-    <br>
-</div>
-</div>
 
 </body>
 </html>

@@ -37,7 +37,7 @@
 
 .fieldset_unregistered_profile {
     position: relative;
-    height: 170px;
+    height: 130px;
     width: 277px;
     display: inline-block;
     border: 1px solid #ccc;
@@ -50,7 +50,7 @@
 .fieldset_registered_profile {
     position: relative;
     right: -2px;
-    height: 600px;
+    height: 580px;
     width: 277px;
     display: inline-block;
     border: 1px solid #ccc;
@@ -64,7 +64,7 @@
     position: relative;
     right:7px;
     top:75px;
-    height: 450px;
+    height: 430px;
     width: 250px;
     display: inline-block;
     border: 1px solid #ccc;
@@ -78,7 +78,7 @@
     position: relative;
     right: 15px;
     top:-15px;
-    height: 450px;
+    height: 420px;
     width: 240px;
     display: inline-block;
     border: 0px solid #ccc;
@@ -113,26 +113,6 @@
     text-align: center;
 }
 
-.header_buttons_border {
-    border-radius:5px;
-    width: 1000px;
-    background-color: #f2f2f2; /* ?????????? ???? ???? */
-    padding: 10px; /* ?????????? ??????? ?????? ????? */
-    font-family: Arial, sans-serif; /* ?????????? ????? */
-    font-size: 14px; /* ?????????? ?????? ?????? */
-    line-height: 1.5; /* ?????????? ??????????? ?????????? */
-    border: 1px solid #ccc; /* ???????? ??????? */
-    /*text-align:center;*/
-    /*margin:20px;
-    padding:20px;*/
-}
-
-.header_buttons_size{
-    float: left;
-    height:50px;
-    width:100px;
-}
-
 .quote_text{
     font-size:20px;
     text-align: center;
@@ -157,23 +137,13 @@
     width:25px;
 }
 
-.header_buttons{
-    display: inline-block;
-    background-color: #f2f2f2;
-    padding: 10px;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
 .posted_by {
     padding-left:600px;
     padding-top: -500px;
 }
 
 .fieldset_number_quote {
+    margin-bottom: 15px;
     position: relative;
     top:20px;
     height: 60px;
@@ -191,15 +161,11 @@
     height: 13px;
     border-radius:5px;
     width: 600px;
-     /* ?????????? ???? ???? */
-    padding: 10px; /* ?????????? ??????? ?????? ????? */
-    font-family: Arial, sans-serif; /* ?????????? ????? */
-    font-size: 14px; /* ?????????? ?????? ?????? */
-    line-height: 1.5; /* ?????????? ??????????? ?????????? */
-    border: 0px solid #ccc; /* ???????? ??????? */
-    /*text-align:center;*/
-    /*margin:20px;
-    padding:20px;*/
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 0px solid #ccc;
 }
 
 .quote_text_queue{
@@ -235,3 +201,10 @@
     top: 260px;
     font-size: 15px;
 }
+
+.incorrect_log_and_pass_text {
+    color:red;
+    position: relative;
+    bottom: 10px
+}
+

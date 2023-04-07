@@ -1,4 +1,8 @@
-.header_buttons_border {
+
+/*/ THIS PART RESPONSIBLE FOR HEAD/*/
+
+.header_buttons_field {
+    position: relative;
     border-radius:5px;
     width: 1000px;
     background-color: #f2f2f2; /* ?????????? ???? ???? */
@@ -12,7 +16,7 @@
     padding:20px;*/
 }
 
-.header_buttons {
+.header_button {
     display: inline-block;
     background-color: #f2f2f2;
     padding: 10px;
@@ -23,20 +27,88 @@
     border-radius: 5px;
 }
 
-.header_buttons_size{
+.header_button_size{
     float: left;
     height:50px;
     width:100px;
 }
 
-.header_text, .header_text:hover {
+.header_button_text, .header_button_text:hover {
     font-size: 15px;
     font-weight: bold;
     text-decoration: underline;
     color: #009688;
 }
 
-.header_text:hover {
+.header_button_text:hover {
     text-decoration: none;
 }
 
+/*THIS PART RESPONSIBLE FOR MAIN QUOTE*/
+
+.main_quote_field {
+    position: relative;
+    margin-top: 20px;
+    height: 130px;
+    width: 700px;
+    display: inline-block;
+    border-radius:5px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+}
+
+.main_quote_information {
+    font-size: 15px;
+    vertical-align: super;
+    margin-left: 5px
+}
+
+.main_quote_plus_minus_button {
+    margin-top: 50px;
+    margin-left: 15px;
+    height:25px;
+    width:25px;
+}
+
+.main_quote_text_border {
+    margin-left: 90px;
+    margin-top: -95px;
+    height: 75px;
+    border-radius:5px;
+    width: 550px;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    text-align: center;
+    vertical-align: middle;
+    background-color: aliceblue;
+}
+
+.main_quote_text {
+    font-size:20px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.main_quote_owner {
+    position: relative;
+    margin-left: 500px;
+    top: -25px;
+    font-size: 15px;
+}
+
+.sign_in_button {
+    position: relative;
+    bottom: 10px;
+    height:25px;
+    width:60px;
+}
+
+.create_an_account_link {
+    font-size: 15px;
+    position: relative;
+    left: 10px;
+    top: -5px
+}

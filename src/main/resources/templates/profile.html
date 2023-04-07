@@ -6,57 +6,57 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{~/css/profile.css}">
     <link rel="stylesheet" type="text/css" href="../static/css/profile.css">
+    <link rel="stylesheet" type="text/css" th:href="@{~/css/common_styles.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/common_styles.css">
     <title>Profile</title>
     <script src="../static/js/main_js.js"></script>
 
     <!--<div id="head_id"></div>-->
 
-    <div class="header_buttons_border">
+    <div class="header_buttons_field">
 
-        <div class="header_buttons" sec:authorize="isAuthenticated()">
+        <div class="header_button" sec:authorize="isAuthenticated()">
             <form th:method="GET" th:action="@{/profile-page}">
-                <button class="header_buttons_size" type="submit">
-                    <a class="header_text">
-                        Profile
-                    </a>
+                <button class="header_button_size" type="submit">
+                    <span class="header_button_text">Profile</span>
                 </button>
             </form>
         </div>
 
-        <div class="header_buttons" >
+        <div class="header_button" >
             <form th:method="GET" th:action="@{/top-10}">
-                <button class="header_buttons_size" type="submit">
-                    <a class="header_text">
+                <button class="header_button_size" type="submit">
+                    <a class="header_button_text">
                         Top 10
                     </a>
                 </button>
             </form>
         </div>
 
-        <div class="header_buttons">
+        <div class="header_button">
             <form th:method="GET" th:action="@{/flop-10}">
-                <button class="header_buttons_size" type="submit">
-                    <a class="header_text">
+                <button class="header_button_size" type="submit">
+                    <a class="header_button_text">
                         Flop 10
                     </a>
                 </button>
             </form>
         </div>
 
-        <div class="header_buttons">
+        <div class="header_button">
             <form th:method="GET" th:action="@{/last-quote}">
-                <button class="header_buttons_size" type="submit">
-                    <a class="header_text">
+                <button class="header_button_size" type="submit">
+                    <a class="header_button_text">
                         Last quote
                     </a>
                 </button>
             </form>
         </div>
 
-        <div class="header_buttons" sec:authorize="isAuthenticated()">
+        <div class="header_button" sec:authorize="isAuthenticated()">
             <form th:method="GET" th:action="@{/create-quote-page}">
-                <button class="header_buttons_size" type="submit">
-                    <a class="header_text">
+                <button class="header_button_size" type="submit">
+                    <a class="header_button_text">
                         Create quote
                     </a>
                 </button>
