@@ -22,6 +22,7 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{~/css/main.css}">
@@ -94,7 +95,7 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
 <div style="display: flex; position: relative">
 
     <div th:if="${quotesAreCreated}" class="main_quote_field"> <!--class="fieldset_random_quote"-->
-        <a class="main_quote_information">
+        <a class="main_quote_rating" th:text="${'Quote rating: ' + mainQuote.getRating()}">
             Top 1 quote - Score<br>
         </a>
 
@@ -103,14 +104,16 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
             <button class="main_quote_plus_minus_button"><a>-</a></button> <!--class="plus_minus_button"-->
         </div>
 
+        <a class="main_quote_type" th:text="${mainQuoteType}">Random/Last created quote</a>
+
         <div class="main_quote_text_border"> <!--class="quote_text_queue_border"-->
             <a class="main_quote_text"
-               th:text="${'&quot' + randomQuoteText} + '&quot'">
+               th:text="${'&quot' + mainQuote.getQuoteText()} + '&quot'">
                "Random quote"
             </a><!--class="quote_text"-->
         </div>
         <a class="main_quote_owner"
-           th:text="${'Posted by ' + randomQuoteOwner}">
+           th:text="${'Posted by ' + mainQuote.getPerson().getUsername()}">
            Random quote owner
         </a><!--class="random_quote_owner"-->
     </div>
@@ -149,32 +152,8 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
         </div>
     </div>
 
-    <div class="fieldset_unregistered_profile" th:if="${loginError}">
-
-        <form th:method="POST" th:action="@{/process-login}"
-              th:object="${user}" class="sign_in_fields">
-
-            <input type="hidden" th:name="${_csrf.parameterName}"
-                   th:value="${_csrf.token}"/>
-
-            <!--name="username"--><p><input type="text" placeholder="Login"
-                                            th:field="*{username}"></p>
-
-            <p><input type="password" placeholder="Password"
-                      th:field="*{password}"></p>
-
-            <div th:if="${loginError}" class="incorrect_log_and_pass_text">Incorrect login or password</div>
-
-            <button class="sign_in_button"><a>Sign in</a></button> <!--class="sign_in_button"-->
-
-            <a th:href="@{/registration-page}" th:action="GET" class="create_an_account_link">
-                <span>Create an account</span>
-            </a>
-
-        </form>
-    </div>
-
-    <div class="fieldset_unregistered_profile" sec:authorize="isAnonymous()">
+    <div class="fieldset_unregistered_profile"
+         th:if="${#authentication == null || #authorization.expression('isAnonymous()')}">
 
         <form th:method="POST" th:action="@{/process-login}"
               th:object="${user}" class="sign_in_fields">
@@ -190,10 +169,7 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
 
             <div th:if="${loginError}" style="color:red; position: relative; bottom: 10px">Incorrect login or password</div>
 
-            <button style="position: relative;
-    bottom: 10px;
-    height:25px;
-    width:60px;"><a>Sign in</a></button>
+            <button class="sign_in_button"><a>Sign in</a></button>
 
             <a th:href="@{/registration-page}" th:action="GET"
                style="font-size: 15px; position: relative; left: 10px; top: -5px">
@@ -207,8 +183,8 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
         <div th:each="quote : ${quotes}" class="fieldset_number_quote">
 
             <!--<a style="font-size: 10px;" th:text="Top ${quote.getPlace()} quote - Score"></a>-->
-            <a style="font-size: 15px; vertical-align: super; margin-left: -10px">
-                &nbsp;&nbsp;&nbsp;&nbsp;Top 1 quote - Score<br>
+            <a class="random_quote_rating" th:text="${'Quote rating: ' + quote.getRating()}">
+                Top 1 quote - Score<br>
             </a>
 
             <div style="display: flex; margin-top: 20px; left: 20px">
@@ -218,7 +194,7 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
 
             <!--a href="#" style="font-size: 15px; position: absolute; left: 550px; bottom: 400px">posted by Login</a>-->
             <a style="position: relative; margin-left: 540px; top: -20px"
-               th:text="${'posted by ' + quote.getPerson().getUsername()}">
+               th:text="${'Posted by ' + quote.getPerson().getUsername()}">
                 Posted by Username
             </a>
 

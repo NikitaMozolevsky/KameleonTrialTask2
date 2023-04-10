@@ -4,7 +4,7 @@
 .header_buttons_field {
     position: relative;
     border-radius:5px;
-    width: 1000px;
+    width: 981px;
     background-color: #f2f2f2; /* ?????????? ???? ???? */
     padding: 10px; /* ?????????? ??????? ?????? ????? */
     font-family: Arial, sans-serif; /* ?????????? ????? */
@@ -57,10 +57,12 @@
     border: 1px solid #ccc;
 }
 
-.main_quote_information {
+.main_quote_rating {
     font-size: 15px;
     vertical-align: super;
-    margin-left: 5px
+    margin-left: 15px;
+    position: relative;
+    bottom: -3px;
 }
 
 .main_quote_plus_minus_button {
@@ -71,6 +73,7 @@
 }
 
 .main_quote_text_border {
+    position: relative;
     margin-left: 90px;
     margin-top: -95px;
     height: 75px;
@@ -94,7 +97,7 @@
 
 .main_quote_owner {
     position: relative;
-    margin-left: 500px;
+    margin-left: 520px;
     top: -25px;
     font-size: 15px;
 }
@@ -111,4 +114,10 @@
     position: relative;
     left: 10px;
     top: -5px
+}
+
+.main_quote_type {
+    margin-left: 565px;
+    position: absolute;
+    bottom: 110px;
 }

@@ -12,9 +12,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 import static org.hibernate.type.IntegerType.ZERO;
 
@@ -49,8 +48,21 @@ public class QuoteService {
 
 
     public Quote findRandomQuote() throws ServiceException {
-        Optional<Quote> randomQuote = quoteRepository.findAll().stream().findAny();
-        return randomQuote.orElseThrow(ServiceException::new);
+
+        Random random = new Random();
+        /*Stream<Quote> quoteList = quoteRepository.findAll().stream()
+                .sorted(Comparator.comparingInt(o -> random.nextInt())).findFirst().;*/
+
+        /*Optional<Quote> quote = quoteRepository.findAll().stream()
+                .min(Comparator.comparingInt(o -> random.nextInt()));*/
+
+        Optional<Quote> quote = quoteRepository.findAll().stream()
+                .min((a, b) -> random.nextInt(3) - 1);
+
+        return quote.orElseThrow(ServiceException::new);
+
+        /*Optional<Quote> randomQuote = quoteRepository.findAll().stream().findAny();
+        return randomQuote.orElseThrow(ServiceException::new);*/
     }
 
     public List<Quote> findQuoteByPerson(Person person) {
@@ -70,12 +82,13 @@ public class QuoteService {
 
     public List<Quote> findFlop10QuotesByRating() {
 
-        Session session = sessionFactory.getCurrentSession();
+        try(Session session = sessionFactory.openSession()) {
 
-        return session.createQuery(
-                "select q from Quote q order by q.rating asc", Quote.class)
-                .setMaxResults(10)
-                .getResultList();
+            return session.createQuery(
+                            "select q from Quote q order by q.rating asc", Quote.class)
+                    .setMaxResults(10)
+                    .getResultList();
+        }
     }
 
     @Transactional
@@ -83,8 +96,24 @@ public class QuoteService {
 
         quote.setPerson(principalService.getPerson()); //
         quote.setRating(ZERO);
-        quote.setCreationDate(new Date());
+        quote.setCreationDate(LocalDateTime.now());
 
+        quoteRepository.save(quote);
+    }
+
+    public Quote findLastCreatedQuote() {
+        return quoteRepository.findLastCreatedQuote();
+    }
+
+    @Transactional
+    public void increaseRating(Quote quote) {
+        quote.setRating(quote.getRating() + 1);
+        quoteRepository.save(quote);
+    }
+
+    @Transactional
+    public void reduceRating(Quote quote) {
+        quote.setRating(quote.getRating() - 1);
         quoteRepository.save(quote);
     }
 }

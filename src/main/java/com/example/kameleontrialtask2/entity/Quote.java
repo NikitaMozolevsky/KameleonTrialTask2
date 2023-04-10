@@ -3,6 +3,7 @@ package com.example.kameleontrialtask2.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -31,6 +32,6 @@ public class Quote {
     private int rating;
 
     @Column(name = "creation_date")
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
 }

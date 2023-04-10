@@ -16,8 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
+import java.util.Optional;
 
 import static com.example.kameleontrialtask2.constant.HtmlConstant.*;
+import static com.example.kameleontrialtask2.constant.TextConstant.RANDOM_QUOTE_TXT;
 
 @Controller
 @RequestMapping
@@ -51,18 +53,31 @@ public class MainController {
         }
 
         boolean quotesAreCreated;
+        Quote quote;
+
+        //проверка есть ли в модели уже main_qute, или, например, последняя созданная фраза
+        Optional<Quote> mainQuote = Optional.ofNullable((Quote) modelAndView.getModel().get("mainQuote"));
 
         try {
-            Quote quote = quoteService.findRandomQuote();
+            if(mainQuote.isEmpty()) {
+                quote = quoteService.findRandomQuote();
+
+                modelAndView.addObject("mainQuote", quote);
+                modelAndView.addObject("mainQuoteType", RANDOM_QUOTE_TXT);
+
+                /*modelAndView.addObject("randomQuoteText", quote.getQuoteText());
+                modelAndView.addObject("randomQuoteOwner", quote.getPerson().getUsername());*/
+            } else {
+                quote = mainQuote.get();
+            }
 
             quotesAreCreated = true;
-            modelAndView.addObject("randomQuoteText", quote.getQuoteText());
-            modelAndView.addObject("randomQuoteOwner", quote.getPerson().getUsername());
+
         } catch (ServiceException e) {
             quotesAreCreated = false;
         }
         modelAndView.addObject("quotesAreCreated", quotesAreCreated);
-        modelAndView.addObject("quotesAreNotCreatedText", "");
+        /*modelAndView.addObject("quotesAreNotCreatedText", "");*/
         modelAndView.addObject("user", new Person());
         modelAndView.setViewName(MAIN);
 
@@ -90,9 +105,10 @@ public class MainController {
 
     @PostMapping("/registration")
     public ModelAndView registration(@ModelAttribute("user") @Valid Person person,
-                               ModelAndView modelAndView,
                                BindingResult bindingResult) {
 
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("username", person.getUsername());
         personValidator.validate(person, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -102,6 +118,7 @@ public class MainController {
 
         personService.register(person);
         modelAndView.addObject("registered_msg", REGISTERED_MSG_JS);
+        modelAndView.addObject("user", new Person());
         return toMainPage(person, false, modelAndView);
     }
 

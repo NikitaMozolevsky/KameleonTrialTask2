@@ -37,7 +37,7 @@ public class QuotesController {
     @GetMapping("/flop-10")
     public ModelAndView getFlop10Quotes(ModelAndView modelAndView) {
 
-        modelAndView.addObject("quotes", quoteService.findTop10QuotesByRating());
+        modelAndView.addObject("quotes", quoteService.findFlop10QuotesByRating());
         modelAndView.setViewName(MAIN);
 
         return mainController.toMainPage(new Person(), false, modelAndView);
@@ -53,6 +53,15 @@ public class QuotesController {
     public ModelAndView createQuote(@ModelAttribute("quote") Quote quote,
                             ModelAndView modelAndView) {
         quoteService.createQuote(quote);
+        return mainController.toMainPage(new Person(), false, modelAndView);
+    }
+
+    @GetMapping("/last-quote")
+    public ModelAndView lastQuote(ModelAndView modelAndView) {
+
+        modelAndView.addObject("mainQuote", quoteService.findLastCreatedQuote());
+        modelAndView.addObject("mainQuoteType", "Last quote");
+
         return mainController.toMainPage(new Person(), false, modelAndView);
     }
 }

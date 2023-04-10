@@ -208,3 +208,16 @@
     bottom: 10px
 }
 
+.random_quote_rating {
+    font-size: 15px;
+    vertical-align: super;
+    margin-left: 23px;
+}
+
+.sign_in_button {
+    position: relative;
+    bottom: 10px;
+    height:25px;
+    width:60px;
+}
+
