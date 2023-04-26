@@ -3,8 +3,8 @@ package com.example.kameleontrialtask2.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,7 +14,7 @@ import java.util.Date;
 @EqualsAndHashCode
 @Entity
 @Table(name = "quotes")
-public class Quote {
+public class Quote implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

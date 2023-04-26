@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -14,7 +15,7 @@ import java.util.Date;
 @EqualsAndHashCode
 @Entity
 @Table(name = "person")
-public class Person {
+public class Person implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

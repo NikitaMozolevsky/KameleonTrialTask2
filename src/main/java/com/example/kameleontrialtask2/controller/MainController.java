@@ -9,15 +9,18 @@ import com.example.kameleontrialtask2.services.QuoteService;
 import com.example.kameleontrialtask2.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
 
+import static com.example.kameleontrialtask2.constant.EntityConstant.MAIN_QUOTE;
+import static com.example.kameleontrialtask2.constant.EntityConstant.MAIN_QUOTE_TYPE;
 import static com.example.kameleontrialtask2.constant.HtmlConstant.*;
 import static com.example.kameleontrialtask2.constant.TextConstant.RANDOM_QUOTE_TXT;
 
@@ -43,7 +46,7 @@ public class MainController {
     }
 
     @GetMapping("/guest")
-    public ModelAndView toMainPage(@ModelAttribute (name = "user") Person person,
+    public ModelAndView toMainPage(HttpServletRequest request, @ModelAttribute (name = "user") Person person,
                              @RequestParam (value = "badCredentials", required = false)
                                       boolean badCredentials,
                              ModelAndView modelAndView) {
@@ -56,19 +59,21 @@ public class MainController {
         Quote quote;
 
         //проверка есть ли в модели уже main_qute, или, например, последняя созданная фраза
-        Optional<Quote> mainQuote = Optional.ofNullable((Quote) modelAndView.getModel().get("mainQuote"));
+        /*Optional<Quote> mainQuote = Optional.ofNullable((Quote) modelAndView.getModel().get("mainQuote"));*/
+        Optional<Object> mainQuoteSession = Optional.ofNullable(request.getSession().getAttribute(MAIN_QUOTE));
 
         try {
-            if(mainQuote.isEmpty()) {
+            if(mainQuoteSession.isEmpty()) {
                 quote = quoteService.findRandomQuote();
 
-                modelAndView.addObject("mainQuote", quote);
-                modelAndView.addObject("mainQuoteType", RANDOM_QUOTE_TXT);
+                request.getSession().setAttribute(MAIN_QUOTE, quote);
+                request.getSession().setAttribute(MAIN_QUOTE_TYPE, RANDOM_QUOTE_TXT);
+
+                /*modelAndView.addObject("mainQuote", quote);
+                modelAndView.addObject("mainQuoteType", RANDOM_QUOTE_TXT);*/
 
                 /*modelAndView.addObject("randomQuoteText", quote.getQuoteText());
                 modelAndView.addObject("randomQuoteOwner", quote.getPerson().getUsername());*/
-            } else {
-                quote = mainQuote.get();
             }
 
             quotesAreCreated = true;
@@ -91,11 +96,12 @@ public class MainController {
         return MAIN;
     }*/
 
-    @RequestMapping("/bad-credentials")
-    public ModelAndView loginErrorSecond(@ModelAttribute (name = "user") Person person,
+    @GetMapping("/bad-credentials")
+    public ModelAndView loginErrorSecond(HttpServletRequest request,
+                                         @ModelAttribute (name = "user") Person person,
                                    ModelAndView modelAndView) {
 
-        return toMainPage(person, true, modelAndView);
+        return toMainPage(request, person, true, modelAndView);
     }
 
     @GetMapping("/registration-page")
@@ -104,7 +110,8 @@ public class MainController {
     }
 
     @PostMapping("/registration")
-    public ModelAndView registration(@ModelAttribute("user") @Valid Person person,
+    public ModelAndView registration(HttpServletRequest request,
+                                     @ModelAttribute("user") @Valid Person person,
                                BindingResult bindingResult) {
 
         ModelAndView modelAndView = new ModelAndView();
@@ -119,7 +126,7 @@ public class MainController {
         personService.register(person);
         modelAndView.addObject("registered_msg", REGISTERED_MSG_JS);
         modelAndView.addObject("user", new Person());
-        return toMainPage(person, false, modelAndView);
+        return toMainPage(request, person, false, modelAndView);
     }
 
     @GetMapping("/profile-page")

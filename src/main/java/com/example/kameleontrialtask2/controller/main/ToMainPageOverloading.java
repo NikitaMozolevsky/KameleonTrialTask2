@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class ToMainPageOverloading {
 
@@ -18,9 +20,10 @@ public class ToMainPageOverloading {
     }
 
 
-    public ModelAndView toMainPage(ModelAndView modelAndView) {
+    public ModelAndView toMainPage(HttpServletRequest request,
+                                   ModelAndView modelAndView) {
         return mainController.toMainPage
-                (new Person(), false, modelAndView);
+                (request, new Person(), false, modelAndView);
     }
 
 }

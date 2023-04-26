@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import static com.example.kameleontrialtask2.constant.TextConstant.MINUS;
+import static com.example.kameleontrialtask2.constant.TextConstant.PLUS;
 import static org.hibernate.type.IntegerType.ZERO;
 
 @Service
@@ -106,6 +108,28 @@ public class QuoteService {
     }
 
     @Transactional
+    public void updateQuoteRating(String quoteId, String attribute) {
+
+        Optional<Quote> optionalQuote = quoteRepository.findById(Integer.valueOf(quoteId));
+
+        if (optionalQuote.isPresent()) {
+
+            Quote quote = optionalQuote.get();
+
+            if (attribute.equals(PLUS)) {
+
+                quote.setRating(quote.getRating() + 1);
+                quoteRepository.save(quote);
+                
+            } else if (attribute.equals(MINUS)) {
+
+                quote.setRating(quote.getRating() - 1);
+                quoteRepository.save(quote);
+            }
+        }
+    }
+
+    /*@Transactional
     public void increaseRating(Quote quote) {
         quote.setRating(quote.getRating() + 1);
         quoteRepository.save(quote);
@@ -115,5 +139,9 @@ public class QuoteService {
     public void reduceRating(Quote quote) {
         quote.setRating(quote.getRating() - 1);
         quoteRepository.save(quote);
+    }*/
+
+    public Quote findQuoteById(int quoteId) {
+        return quoteRepository.findQuoteById(quoteId);
     }
 }

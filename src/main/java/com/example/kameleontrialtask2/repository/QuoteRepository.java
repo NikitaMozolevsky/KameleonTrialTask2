@@ -19,4 +19,5 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
             )
             """)
     Quote findLastCreatedQuote();
+    Quote findQuoteById(int id);
 }

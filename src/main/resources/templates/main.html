@@ -37,85 +37,115 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
 
     <!--<div id="head_id"></div>-->
 
+    <div class="header_buttons_field">
+
+        <div class="header_button" sec:authorize="isAuthenticated()">
+            <form th:method="GET" th:action="@{/profile-page}">
+                <button class="header_button_size" type="submit">
+                    <span class="header_button_text">Profile</span>
+                </button>
+            </form>
+        </div>
+
+        <div class="header_button" >
+            <form th:method="GET" th:action="@{/top-10}">
+                <button class="header_button_size" type="submit">
+                    <a class="header_button_text">
+                        Top 10
+                    </a>
+                </button>
+            </form>
+        </div>
+
+        <div class="header_button">
+            <form th:method="GET" th:action="@{/flop-10}">
+                <button class="header_button_size" type="submit">
+                    <a class="header_button_text">
+                        Flop 10
+                    </a>
+                </button>
+            </form>
+        </div>
+
+        <div class="header_button">
+            <form th:method="GET" th:action="@{/last-quote}">
+                <button class="header_button_size" type="submit">
+                    <a class="header_button_text">
+                        Last quote
+                    </a>
+                </button>
+            </form>
+        </div>
+
+        <div class="header_button" sec:authorize="isAuthenticated()">
+            <form th:method="GET" th:action="@{/create-quote-page}">
+                <button class="header_button_size" type="submit">
+                    <a class="header_button_text">
+                        Create quote
+                    </a>
+                </button>
+            </form>
+        </div>
+
+        <div class="header_button">
+            <form th:method="GET" th:action="@{/random-quote}">
+                <button class="header_button_size" type="submit">
+                    <a class="header_button_text">
+                        Random quote
+                    </a>
+                </button>
+            </form>
+        </div>
+    </div>
+
 </head>
 
 <body>
 
-<div class="header_buttons_field">
-
-    <div class="header_button" sec:authorize="isAuthenticated()">
-        <form th:method="GET" th:action="@{/profile-page}">
-            <button class="header_button_size" type="submit">
-                <span class="header_button_text">Profile</span>
-            </button>
-        </form>
-    </div>
-
-    <div class="header_button" >
-        <form th:method="GET" th:action="@{/top-10}">
-            <button class="header_button_size" type="submit">
-                <a class="header_button_text">
-                    Top 10
-                </a>
-            </button>
-        </form>
-    </div>
-
-    <div class="header_button">
-        <form th:method="GET" th:action="@{/flop-10}">
-            <button class="header_button_size" type="submit">
-                <a class="header_button_text">
-                    Flop 10
-                </a>
-            </button>
-        </form>
-    </div>
-
-    <div class="header_button">
-        <form th:method="GET" th:action="@{/last-quote}">
-            <button class="header_button_size" type="submit">
-                <a class="header_button_text">
-                    Last quote
-                </a>
-            </button>
-        </form>
-    </div>
-
-    <div class="header_button" sec:authorize="isAuthenticated()">
-        <form th:method="GET" th:action="@{/create-quote-page}">
-            <button class="header_button_size" type="submit">
-                <a class="header_button_text">
-                    Create quote
-                </a>
-            </button>
-        </form>
-    </div>
-</div>
-
 <div style="display: flex; position: relative">
 
     <div th:if="${quotesAreCreated}" class="main_quote_field"> <!--class="fieldset_random_quote"-->
-        <a class="main_quote_rating" th:text="${'Quote rating: ' + mainQuote.getRating()}">
-            Top 1 quote - Score<br>
+        <a class="main_quote_rating" th:text="${#session.getAttribute('mainQuote').getRating()}">
+            34<br>
         </a>
 
-        <div style="display: flex; margin-top: 20px; left: 20px">
-            <button class="main_quote_plus_minus_button"><a>+</a></button> <!--class="plus_minus_button"-->
-            <button class="main_quote_plus_minus_button"><a>-</a></button> <!--class="plus_minus_button"-->
+        <div class="main_quote_plus_minus_button_position">
+
+            <div th:if="${#authentication == null || #authorization.expression('isAnonymous()')}">
+                <button class="main_quote_plus_button"
+                        th:onclick="showMessage('You must be registered!')"><a>+</a></button>
+                <button class="main_quote_minus_button"
+                    th:onclick="showMessage('You must be registered!')"><a>-</a></button>
+            </div>
+
+            <div th:unless="${#authentication == null || #authorization.expression('isAnonymous()')}">
+                <form th:method="POST" th:action="@{/change-rating}">
+                    <input type="hidden" name="quoteId" th:value="${#session.getAttribute('mainQuote').getId()}">
+                    <input type="hidden" name="attribute" th:value="'+'">
+                    <button type="submit" class="main_quote_plus_button"><a>+</a></button>
+                </form>
+                <form th:method="POST" th:action="@{/change-rating}">
+                    <input type="hidden" name="quoteId" th:value="${#session.getAttribute('mainQuote').getId()}">
+                    <input type="hidden" name="attribute" th:value="'-'">
+                    <button class="main_quote_minus_button"><a>-</a></button>
+                </form>
+            </div>
+
         </div>
 
-        <a class="main_quote_type" th:text="${mainQuoteType}">Random/Last created quote</a>
+        <span class="main_quote_type" th:text="${#session.getAttribute('mainQuoteType')}">Last created quote</span>
 
-        <div class="main_quote_text_border"> <!--class="quote_text_queue_border"-->
-            <a class="main_quote_text"
-               th:text="${'&quot' + mainQuote.getQuoteText()} + '&quot'">
+        <span class="main_quote_owner"
+           th:text="${'Posted by ' + #session.getAttribute('mainQuote').getPerson().getUsername()}">
+            Random quote owner
+        </span>
+
+        <div class="main_quote_text_border">
+            <span class="main_quote_text"
+               th:text="${'&quot' + #session.getAttribute('mainQuote').getQuoteText()} + '&quot'">
                "Random quote"
-            </a><!--class="quote_text"-->
+            </span>
         </div>
-        <a class="main_quote_owner"
-           th:text="${'Posted by ' + mainQuote.getPerson().getUsername()}">
-           Random quote owner
-        </a><!--class="random_quote_owner"-->
     </div>
 
     <!--<div th:unless="${quotesAreCreated}" class="main_quote_text_border">
@@ -183,17 +213,36 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
         <div th:each="quote : ${quotes}" class="fieldset_number_quote">
 
             <!--<a style="font-size: 10px;" th:text="Top ${quote.getPlace()} quote - Score"></a>-->
-            <a class="random_quote_rating" th:text="${'Quote rating: ' + quote.getRating()}">
-                Top 1 quote - Score<br>
+            <a class="queue_quote_rating" th:text="${quote.getRating()}">
+                34<br>
             </a>
 
-            <div style="display: flex; margin-top: 20px; left: 20px">
-                <button class="plus_minus_button"><a>+</a></button>
-                <button class="plus_minus_button"><a>-</a></button>
+            <div class="plus_minus_button_queue_div">
+
+                <div th:if="${#authentication == null || #authorization.expression('isAnonymous()')}">
+                    <button class="plus_button_queue_empty"
+                            th:onclick="showMessage('You must be registered!')"><a>+</a></button>
+                    <button class="minus_button_queue_empty"
+                            th:onclick="showMessage('You must be registered!')"><a>-</a></button>
+                </div>
+                <div th:unless="${#authentication == null || #authorization.expression('isAnonymous()')}">
+                    <form th:method="POST" th:action="@{/change-rating}">
+                        <input type="hidden" name="quoteId" th:value="${quote.getId()}">
+                        <input type="hidden" name="attribute" th:value="'+'">
+                        <button type="submit" class="plus_button_queue"><a>+</a></button>
+                    </form>
+                    <form th:method="POST" th:action="@{/change-rating}">
+                        <input type="hidden" name="quoteId" th:value="${quote.getId()}">
+                        <input type="hidden" name="attribute" th:value="'-'">
+                        <button class="minus_button_queue"><a>-</a></button>
+                    </form>
+                </div>
             </div>
 
             <!--a href="#" style="font-size: 15px; position: absolute; left: 550px; bottom: 400px">posted by Login</a>-->
-            <a style="position: relative; margin-left: 540px; top: -20px"
+            <a class="queue_quote_owner_text" style="position: relative;
+    margin-left: 10px;
+    top: -37px;"
                th:text="${'Posted by ' + quote.getPerson().getUsername()}">
                 Posted by Username
             </a>

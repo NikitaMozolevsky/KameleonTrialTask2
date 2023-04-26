@@ -41,6 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/create-quote",
             "/profile",
             "/profile-page",
+            "/change-rating",
+            "/random-quote",
+
 
     };
 
